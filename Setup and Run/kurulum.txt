@@ -1,0 +1,71 @@
+-----Kurulum Sonrası Yapılacaklar-----
+1- Güncellemeleri Kontrol Et
+sudo apt update && sudo apt dist-upgrade
+
+2- GDEBI Kurulumu
+sudo apt-get install gdebi -y
+
+3- Temel Paket ve Kütüphanelerin Kurulumu
+sudo apt install htop neofetch bpytop clang cargo libc6-i386 libc6-x32 libu2f-udev samba-common-bin exfat-fuse default-jdk curl wget unrar linux-headers-$(uname -r) linux-headers-generic git gstreamer1.0-vaapi unzip ntfs-3g p7zip htop neofetch bpytop git gcc make curl bzip2 tar
+
+4- Ardupilot Kurulumu
+sudo apt-get install git
+sudo apt-get install gitk git-gui
+git clone --recurse-submodules https://github.com/ArduPilot/ardupilot.git
+cd ardupilot
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+. ~/.profile
+
+5- Ardupilot Sitl Kurulumu ve Kullanımı
+cd ardupilot
+./waf configure --board sitl
+sudo apt install python3-empy
+sudo apt install python3-future
+./waf copter
+cd ArduCopter
+../Tools/autotest/sim_vehicle.py --map --console
+
+6- Pymavlink Mavproxy Kurulumu
+pip install --upgrade pymavlink MAVProxy
+
+7- Gazebo Ardupilot Kurulumu
+
+sudo apt-get update
+sudo apt-get install lsb-release wget gnupg
+sudo wget https://packages.osrfoundation.org/gazebo.gpg -O /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null
+sudo apt-get update
+sudo apt-get install gz-harmonic
+
+
+!!!!!ÖNCEKİ TERMİNALİ KAPATIP YENİ BİR TERMİNAL AÇTIKTAN SONRA İŞLEMLERE DEVAM EDECEĞİZ!!!!!
+
+sudo apt update
+sudo apt install libgz-sim8-dev rapidjson-dev
+sudo apt install libopencv-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev gstreamer1.0-plugins-bad gstreamer1.0-libav gstreamer1.0-gl
+
+git clone https://github.com/ArduPilot/ardupilot_gazebo
+cd ardupilot_gazebo
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+make -j4
+
+export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLUGIN_PATH
+export GZ_SIM_RESOURCE_PATH=$HOME/ardupilot_gazebo/models:$HOME/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+
+echo 'export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/ardupilot_gazebo/build:${GZ_SIM_SYSTEM_PLUGIN_PATH}' >> ~/.bashrc
+echo 'export GZ_SIM_RESOURCE_PATH=$HOME/ardupilot_gazebo/models:$HOME/ardupilot_gazebo/worlds:${GZ_SIM_RESOURCE_PATH}' >> ~/.bashrc
+
+
+export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/gz_ws/src/ardupilot_gazebo/build:$GZ_SIM_SYSTEM_PLUGIN_PATH
+export GZ_SIM_RESOURCE_PATH=$HOME/gz_ws/src/ardupilot_gazebo/models:$HOME/gz_ws/src/ardupilot_gazebo/worlds:$GZ_SIM_RESOURCE_PATH
+
+echo 'export GZ_SIM_SYSTEM_PLUGIN_PATH=$HOME/gz_ws/src/ardupilot_gazebo/build:${GZ_SIM_SYSTEM_PLUGIN_PATH}' >> ~/.bashrc
+echo 'export GZ_SIM_RESOURCE_PATH=$HOME/gz_ws/src/ardupilot_gazebo/models:$HOME/gz_ws/src/ardupilot_gazebo/worlds:${GZ_SIM_RESOURCE_PATH}' >> ~/.bashrc
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--gazebo çalıştırmak için--
+gz sim -v4 -r iris_runway.sdf
+
+--ardupilot sitl çalıştırmak için--
+cd ~/ardupilot/Tools/autotest
+python sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console

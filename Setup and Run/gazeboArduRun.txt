@@ -1,0 +1,10 @@
+--gazebo--
+gz sim -v4 -r iris_runway.sdf
+
+--ardupilot--
+cd ~/ardupilot/Tools/autotest
+python sim_vehicle.py -v ArduCopter -f gazebo-iris --model JSON --map --console
+
+--kod--
+cd DroneCodes
+python Gorevler.py
