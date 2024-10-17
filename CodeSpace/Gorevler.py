@@ -17,8 +17,8 @@ ArmVeTakeoff(drone, 20)
 #Baslangıç konumunu al
 baslangicLat, baslangicLon, baslangicAlt = KonumAl(drone)
 
-# 20 metre kuzeye, 30 metre batıya, 10 metre yukarı git
-Git(drone, 20, -30, 10)
+# 20 metre kuzeye, 30 metre batıya, 5 metre yukarı git
+Git(drone, 20, -30, 5)
 
 #Eve dönme gonksiyonu
 EveDon(drone, baslangicLat, baslangicLon, baslangicAlt)
