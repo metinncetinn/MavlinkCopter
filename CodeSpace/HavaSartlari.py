@@ -21,16 +21,21 @@ sunset_time = datetime.fromtimestamp(weather_data['sys']['sunset'])
 #Rüzgar hızı
 windSpeed = weather_data['wind']['speed'] * 3.6
 
-def UcusaUygunMu(maxRuzgar):
+def RuzgarKontrol(maxRuzgar):
     if windSpeed < maxRuzgar:
         print("Ucus icin ruzgar uygun")
         return True
     else:
         print("Ruzgar ucus icin çok fazla")
         return False
-    
+
+#Tüm sonuçlar
+#print(weather_data)
+
+"""
 # Sonuçları yazdır
 print(f"Sicaklik: {celsius_temp:.2f} °C")
 print(f"Ruzgar Hizi: {windSpeed:.2f} km/h")
 print(f"Gün doğumu: {sunrise_time.strftime('%H:%M:%S')}")
 print(f"Gün batimi: {sunset_time.strftime('%H:%M:%S')}")
+"""

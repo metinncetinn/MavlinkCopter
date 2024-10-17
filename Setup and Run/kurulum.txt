@@ -38,7 +38,7 @@ sudo apt-get update
 sudo apt-get install gz-harmonic
 
 
-!!!!!ÖNCEKİ TERMİNALİ KAPATIP YENİ BİR TERMİNAL AÇTIKTAN SONRA İŞLEMLERE DEVAM EDECEĞİZ!!!!!
+!!!ÖNCEKİ TERMİNALİ KAPATIN VE YENİSİNİ AÇIN!!!
 
 sudo apt update
 sudo apt install libgz-sim8-dev rapidjson-dev

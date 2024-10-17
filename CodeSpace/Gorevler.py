@@ -1,9 +1,9 @@
 from pymavlink import mavutil
 import sys, math, time
 from Komutlar import *
-import HavaSartlari
+import HavaSartlari 
 
-if HavaSartlari.UcusaUygunMu(50):
+if HavaSartlari.RuzgarKontrol(30):
     # Bağlantı yapma
     try:
         drone = mavutil.mavlink_connection('127.0.0.1:14550') #Local IP + MavlinkPort
