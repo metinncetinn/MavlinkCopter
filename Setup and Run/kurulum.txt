@@ -1,4 +1,6 @@
------Kurulum Sonrası Yapılacaklar-----
+--!--TERMİNAL KODLARINI SATIR SATIR YAZMANIZ OLASI SORUNLARIN ÖNÜNE GEÇER--!--
+
+-----Ubuntu Kurulumu Sonrası Yapılacaklar-----
 1- Güncellemeleri Kontrol Et
 sudo apt update && sudo apt dist-upgrade
 

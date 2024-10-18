@@ -3,8 +3,9 @@ import sys, math, time
 from Komutlar import *
 import HavaSartlari 
 
+#Ruzgar verilen değerin üstündeyse ucus yapmaz.
 if HavaSartlari.RuzgarKontrol(30):
-    # Bağlantı yapma
+    # Bağlantının yapılması
     try:
         drone = mavutil.mavlink_connection('127.0.0.1:14550') #Local IP + MavlinkPort
         drone.wait_heartbeat() #Sinyal Dönmesini Bekle
@@ -19,7 +20,7 @@ if HavaSartlari.RuzgarKontrol(30):
     #Baslangıç konumunu al
     baslangicLat, baslangicLon, baslangicAlt = KonumAl(drone)
 
-    # 20 metre kuzeye, 30 metre batıya, 5 metre yukarı git
+    # 20 metre kuzeye(+), 30 metre batıya(-), 5 metre yukarı git
     Git(drone, 20, -30, 5)
 
     #Eve dönme gonksiyonu

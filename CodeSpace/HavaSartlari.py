@@ -10,6 +10,9 @@ url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
 response = requests.get(url)
 weather_data = response.json()
 
+#Tüm sonuçlar.
+#print(weather_data)
+
 # Sıcaklığı C cinsine çevir
 kelvin_temp = weather_data['main']['temp']
 celsius_temp = kelvin_temp - 273.15
@@ -18,9 +21,10 @@ celsius_temp = kelvin_temp - 273.15
 sunrise_time = datetime.fromtimestamp(weather_data['sys']['sunrise'])
 sunset_time = datetime.fromtimestamp(weather_data['sys']['sunset'])
 
-#Rüzgar hızı
+#Rüzgar hızı m/s geliyor km/h çeviriliyor.
 windSpeed = weather_data['wind']['speed'] * 3.6
 
+#Rüzgarın hızı kontrol ediliyor
 def RuzgarKontrol(maxRuzgar):
     if windSpeed < maxRuzgar:
         print("Ucus icin ruzgar uygun")
@@ -29,8 +33,6 @@ def RuzgarKontrol(maxRuzgar):
         print("Ruzgar ucus icin çok fazla")
         return False
 
-#Tüm sonuçlar
-#print(weather_data)
 
 """
 # Sonuçları yazdır

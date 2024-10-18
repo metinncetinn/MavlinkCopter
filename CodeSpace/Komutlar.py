@@ -1,6 +1,12 @@
+"""
+Komutlarin linki
+https://ardupilot.org/dev/docs/copter-commands-in-guided-mode.html#set-position-target-global-int
+"""
+
 from pymavlink import mavutil
 import sys, math, time
 
+#Drondan konum bilgilerini alma
 def KonumAl(drone):
     msg = drone.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
     if msg:
@@ -9,12 +15,13 @@ def KonumAl(drone):
         print("Konum alinamadi")
         return None
 
+#Dronun çalışır hale gelmesi ve yükselmesi
 def ArmVeTakeoff(drone, height):
     # GUIDED MOD ALMA
     mode = 'GUIDED'
     if mode not in drone.mode_mapping():
         print('Bilinmeyen mod: {}'.format(mode))
-        print('Deneyin:', list(drone.mode_mapping().keys()))
+        print('Drone modları:', list(drone.mode_mapping().keys()))
         sys.exit(1)
     mode_id = drone.mode_mapping()[mode]
     drone.mav.set_mode_send(drone.target_system, mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED, mode_id)
@@ -47,25 +54,30 @@ def ArmVeTakeoff(drone, height):
         if current_position:
             _, _, current_alt = current_position
             if current_alt >= height * 0.95:  # Yüksekliğin %95'ine ulaştıysa(hata payı/threshold)
-                print("Kalkış tamamlandı.")
+                print("Kalkis tamamlandi.")
                 break
         time.sleep(1)  # Kontrol aralığı
 
 # Dünya yarıçapı (metre cinsinden)
 #R = 6378137
 
+#Metreyi enleme çevirme
 def meters_to_lat(meters):
     return meters / 111320
 
+#Metreyi boylama çevirme(enleme bağlı)
 def meters_to_lon(meters, latitude):
     return meters / (111320 * math.cos(math.radians(latitude)))
 
+#Dronu bulunduğu pozisyondan metre cinsinden ilerletme
 def Git(drone, lat_offset, lon_offset, alt_offset):
+    #Direkt kordinat verilmediği için şu anki konuma eklem yapılacak. Bu yüzden konum alınıyor.
     current_position = KonumAl(drone)
     if current_position:
         current_lat, current_lon, current_alt = current_position
         print(f"Mevcut Konum: Lat: {current_lat}, Lon: {current_lon}, Alt: {current_alt}")
 
+        #Kordinat cinsinden metreyi hesaplama ve şu anki konuma ekleme.
         delta_lat = meters_to_lat(lat_offset)
         delta_lon = meters_to_lon(lon_offset, current_lat)
 
@@ -78,7 +90,7 @@ def Git(drone, lat_offset, lon_offset, alt_offset):
             drone.target_system, 
             drone.target_component,
             mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT_INT,
-            0b110111111000,  # Kullanılacak parametreler
+            0b110111111000,  #(type_mask) Kullanılacak parametreler yukarıdaki linkte mevcut.
             int(target_lat * 1e7),
             int(target_lon * 1e7),
             target_alt,
@@ -89,7 +101,7 @@ def Git(drone, lat_offset, lon_offset, alt_offset):
         )
         print(f"Yeni hedefe uculuyor: Lat: {target_lat}, Lon: {target_lon}, Alt: {target_alt}")
 
-        threshold = 1.0  # 1 metre eşiği
+        threshold = 1.0  # 1 metre hata payı
         while True:
             cPos = KonumAl(drone)
             if cPos:
@@ -99,10 +111,11 @@ def Git(drone, lat_offset, lon_offset, alt_offset):
                    (abs(c_alt - target_alt) < threshold):
                     print("Hedefe ulasildi.")
                     break
-            time.sleep(1)  # Döngüde aşırı yüklenmeyi önlemek için bekleme
+            time.sleep(1)  # Kontrol aralığı
     else:
         print("Mevcut konum alinamadi")
 
+#İniş ve motoru kapatma fonksiyonu
 def KonVeDisarm(drone):
     mode = 'LAND'
     if mode not in drone.mode_mapping():
@@ -126,12 +139,12 @@ def KonVeDisarm(drone):
         0,  # param6
         0   # param7
     )
-    print("İniş komutu gönderildi.")
+    print("İnis komutu gonderildi.")
 
     while True:
         msg = drone.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
         if msg and msg.relative_alt <= 0.2:
-            print("Drone iniş yaptı.")
+            print("Drone inis yapti.")
             break
 
     drone.mav.command_long_send(
@@ -142,8 +155,9 @@ def KonVeDisarm(drone):
         0,  # 0 = disarm
         0, 0, 0, 0, 0, 0
     )
-    print("Disarm işlemi tamamlandı.")
+    print("Disarm islemi tamamlandi.")
 
+#İnis(kalkış pozisyonuna) ve motoru kapatma
 def EveDon(drone, basLat, basLon, basAlt):
     current_position = KonumAl(drone)
     if current_position:
