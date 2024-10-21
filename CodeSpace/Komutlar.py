@@ -193,3 +193,15 @@ def EveDon(drone, basLat, basLon, basAlt):
             time.sleep(1)  # Döngüde aşırı yüklenmeyi önlemek için bekleme
     else:
         print("Mevcut konum alinamadi")
+
+#https://mavlink.io/en/mavgen_python/#receiving-messages
+def BilgiAl(drone, beklenenMesajTipi=None, timeout=2):
+    #bekleyenMesajTipi = Sorgulanacak mesaj tipidir.
+    baslangicZamani = time.time()
+    
+    while time.time() - baslangicZamani < timeout:
+        mesaj = drone.recv_match(type=beklenenMesajTipi,blocking=True)
+        
+        if mesaj:
+            mesaj = mesaj.to_dict()
+            print(mesaj)  # Alınan mesajı yazdır
