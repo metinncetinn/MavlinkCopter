@@ -1,12 +1,12 @@
 --Türkçe
 # Drone Simülasyonu Projesi
 
-Bu proje, Ubuntu üzerinde ArduPilot ve Gazebo kullanarak otomatik bir drone(copter) simülasyonu gerçekleştirmektedir. Proje, Python ile yazılmış kodlar kullanarak simülasyonu otomatik hale getirir ve uçuş esnasında rüzgar kontrolü yapar.
+Bu proje, Ubuntu üzerinde ArduPilot ve Gazebo kullanarak otomatik bir drone(copter) simülasyonu gerçekleştirmektedir. Proje, Python ile yazılmış kodlar kullanarak simülasyonu otomatik hale getirir.
 
 ## Özellikler
 
 - **Otomatik Simülasyon:** Python ile yazılmış kodlar sayesinde drone simülasyonu otomatik olarak gerçekleştirilir.
-- **Rüzgar Kontrolü:** OpenWeatherMap API kullanılarak rüzgar durumu kontrol edilir ve uçuş esnasında bu verilere göre ayarlamalar yapılır.
+- **Hava Kontrolü:** OpenWeatherMap API kullanılarak hava durumu kontrol edilir ve uçuş esnasında bu verilere göre ayarlamalar yapılır.
 
 ## Gereksinimler
 
@@ -23,17 +23,17 @@ Bu proje, Ubuntu üzerinde ArduPilot ve Gazebo kullanarak otomatik bir drone(cop
 2. **Proje Klasörünü Klonlayın:**
    ```bash
    git clone https://github.com/metinncetinn/MavlinkCopter.git
-   cd proje_adi
+   cd MavlinkCopter
    ```
 
 3. **API Anahtarını Ayarlayın:**
-   OpenWeatherMap API anahtarınızı `config.py` dosyasına ekleyin.
+   OpenWeatherMap API anahtarınızı `key.py` dosyasına ekleyin.
 
 ## Kullanım
 
 Simülasyonu başlatmak için aşağıdaki komutu kullanın:
   ```bash
-  python simülasyon.py
+  python Gorevler.py
   ```
 
 ## Katkıda Bulunma
@@ -49,7 +49,7 @@ Katkılarınızı bekliyoruz! Lütfen pull request gönderin veya sorunlarınız
 ## Features
 
 - **Automatic Simulation:** The drone simulation is carried out automatically through Python scripts.
-- **Wind Control:** Wind conditions are monitored using the OpenWeatherMap API, and adjustments are made during flight based on this data.
+- **Weather Control:** Weather conditions are monitored using the OpenWeatherMap API, and adjustments are made during flight based on this data.
 
 ## Requirements
 
@@ -66,17 +66,17 @@ Katkılarınızı bekliyoruz! Lütfen pull request gönderin veya sorunlarınız
 2. **Clone the Project Folder:**
    ```bash
    git clone https://github.com/metinncetinn/MavlinkCopter.git
-   cd project_name
+   cd MavlinkCopter
    ```
 
 3. **Set Up Your API Key:**
-   Add your OpenWeatherMap API key to the `config.py` file.
+   Add your OpenWeatherMap API key to the `key.py` file.
 
 ## Usage
 
 To start the simulation, use the following command:
   ```bash
-  python simulation.py
+  python Gorevler.py
   ```
 
 ## Contributing
