@@ -18,7 +18,7 @@ Bu proje, Ubuntu üzerinde ArduPilot ve Gazebo kullanarak otomatik bir drone(cop
 ## Kurulum
 1. **Ardupilot ve gazebo kurulumu**
 
-  (Ubuntu kurulumu sonrası yüklemeler .txt dosyasında paylaşılmıştır.)
+  Ubuntu kurulumu sonrası yüklemeler "kurulum.txt" dosyasında paylaşılmıştır.
 
 2. **Proje Klasörünü Klonlayın:**
    ```bash
@@ -61,7 +61,7 @@ Katkılarınızı bekliyoruz! Lütfen pull request gönderin veya sorunlarınız
 ## Installation
 1. **Install ArduPilot and Gazebo**
 
-  (Installation instructions are provided in a .txt file after Ubuntu installation.)
+  Installation instructions are provided in a "kurulum.txt" file after Ubuntu installation.
 
 2. **Clone the Project Folder:**
    ```bash
